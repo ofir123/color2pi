@@ -1,6 +1,5 @@
-import io
-from PIL import Image
-from PIL import ImageStat
+
+from PIL import Image, ImageStat
 
 import picamera 
 import serial
@@ -21,6 +20,7 @@ while 1:
 		#camera.start_preview()
 		camera.capture('image.png',resize=(30,20))
 
+	#all this would be beteer of using a stream
 	im=Image.open('image.png')
 	left=10
 	top=7
