@@ -24,6 +24,8 @@ http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
 
 we will do this all in nodejs, but its too slow and the pi camera seems not to be as well supported
 
+see efort [here](https://github.com/shenkarSElab/Adafruit_TCS34725/tree/master/examples/colorview/node-serialport)
+
 image processing - https://github.com/EyalAr/lwip
 
 camera access - https://github.com/troyth/node-raspicam/
