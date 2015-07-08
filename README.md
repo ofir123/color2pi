@@ -20,8 +20,12 @@ http://picamera.readthedocs.org/en/release-1.10/quickstart.html
 serial disbale logger, if you didnt in the raspi-conf
 http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
 
-==wish==
-we will do this all in nodejs
+==wish
+
+we will do this all in nodejs, but its too slow and the pi camera seems not to be as well supported
+
 image processing - https://github.com/EyalAr/lwip
+
 camera access - https://github.com/troyth/node-raspicam/
+
 and the p5.js for the visuals
