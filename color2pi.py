@@ -25,9 +25,9 @@ while 1:
 	left=10
 	top=7
 	im2 = im.crop((left,top,left+5,top+5))
-	im2.save("temp"+".png")
+	#im2.save("temp"+".png")
 	avg =  ImageStat.Stat(im2).median
-	print(avg)
+	#print(avg)
 	r,g,b,s=avg
 	mesg=str(r)+','+str(g)+','+str(b)+newline
 	ser.write(mesg)
