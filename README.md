@@ -8,12 +8,13 @@ in raspi-config - enable camera, disable console to serial in "advanced", overcl
 
 ```sudo apt-get update && sudo apt-get upgrade```
 
-```sudo apt-get install python-setuptools git```
+```sudo apt-get install python-setuptools git iceweasel```  
+iceweasel is [firefox](https://wiki.debian.org/Iceweasel/), needed if your running selenium (deviantArt.py) 
 
 ##install python depends
 but still stupied jpeg decoder [doesnt load]( http://stackoverflow.com/questions/4632261/pil-jpeg-library-help)
 
-```sudo pip install Pillow logbook zmq```  
+```sudo pip install Pillow logbook zmq selenium```  
 zmq takes long time to compile...
 
 http://picamera.readthedocs.org/en/release-1.10/quickstart.html
