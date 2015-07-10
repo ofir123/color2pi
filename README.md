@@ -22,9 +22,9 @@ serial disbale logger, if you didnt in the raspi-conf
 http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
 
 ##run
-```git clone https://github.com/shenkarSElab/color2pi.git```
-```cd color2pi```
-```python color2pi.py localhost 5555```
+```git clone https://github.com/shenkarSElab/color2pi.git```  
+```cd color2pi```  
+```python color2pi.py localhost 5555```  
 
 ==wish
 
