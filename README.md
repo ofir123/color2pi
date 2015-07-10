@@ -8,17 +8,23 @@ in raspi-config - enable camera, disable console to serial in "advanced", overcl
 
 ```sudo apt-get update && sudo apt-get upgrade```
 
-```sudo apt-get install python-setuptools```
+```sudo apt-get install python-setuptools git```
 
-##install pip and pillow, 
+##install pip and pillow 
 but still stupied jpeg decoder [doesnt load]( http://stackoverflow.com/questions/4632261/pil-jpeg-library-help)
 
-```pip install Pillow```
+```sudo pip install Pillow logbook zmq```  
+zmq takes long time to compile...
 
 http://picamera.readthedocs.org/en/release-1.10/quickstart.html
 
 serial disbale logger, if you didnt in the raspi-conf
 http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
+
+##run
+```git clone https://github.com/shenkarSElab/color2pi.git```
+```cd color2pi```
+```python color2pi.py localhost 5555```
 
 ==wish
 
