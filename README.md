@@ -10,7 +10,7 @@ in raspi-config - enable camera, disable console to serial in "advanced", overcl
 
 ```sudo apt-get install python-setuptools git```
 
-##install pip and pillow 
+##install python depends
 but still stupied jpeg decoder [doesnt load]( http://stackoverflow.com/questions/4632261/pil-jpeg-library-help)
 
 ```sudo pip install Pillow logbook zmq```  
