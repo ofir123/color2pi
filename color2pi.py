@@ -42,7 +42,7 @@ def main():
 	try:
 		while True:
 			with picamera.PiCamera() as camera:
-				sleep(SLEEP_PERIOD)
+				time.sleep(SLEEP_PERIOD)
 				camera.resolution = (80, 60)
 				camera.brightness = 50
 				camera.saturation = 90
