@@ -20,14 +20,24 @@ http://picamera.readthedocs.org/en/release-1.10/quickstart.html
 serial disbale logger, if you didnt in the raspi-conf
 http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
 
-==wish
 
-we will do this all in nodejs, but its too slow and the pi camera seems not to be as well supported
+==node 
+came from [another git](https://github.com/shenkarSElab/Adafruit_TCS34725/tree/master/examples/colorview/node-serialport)
 
-see efort [here](https://github.com/shenkarSElab/Adafruit_TCS34725/tree/master/examples/colorview/node-serialport)
 
-image processing - https://github.com/EyalAr/lwip
 
-camera access - https://github.com/troyth/node-raspicam/
+== for windows (WIP)==
 
-and the p5.js for the visuals
+===download===
+get git for windows (comes with msys), this will be your command line.
+get [nodejs for windows](http://blog.teamtreehouse.com/install-node-js-npm-windows)
+go to command line at Adafruit_TCS34725\examples\colorview\node-serialport\color2web
+
+0. run this line to get all the needed packages for node to run this thing
+$ npm install zmq servi
+1. upload color2pi.ino to arduino
+2. run with the node command 
+$ node color2web.js COM15
+3. open browser at localhost:8080
+4. refresh page to get new data
+
