@@ -12,15 +12,16 @@ function setup() {
   var sensorReading = loadStrings("/data", showData);
 }
 function showData(result) {
+  text.html("raw input" + result);
   var resultString = result[0];
   // split it:
-  var numbers = split(resultString, " ");
+  var numbers = split(resultString, ",");
   // use the numbers:
   c = color(numbers[0], numbers[1], numbers[2]);
   fill(c);
   noStroke();
   rect(10,10,100,100);
-  text.html("Sensor reading:" + resultString);
+  //text.html("Sensor reading:" + resultString);
   text.position(10, 110);
  }
  </script>

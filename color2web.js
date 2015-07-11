@@ -32,14 +32,13 @@ var zmq = require('zmq');
 var zmqResponder = zmq.socket('rep');
 zmqResponder.on('message', function(request) {
   console.log("Received request: [", request.toString(), "]");
-  request.toString();
-  /* do some 'work'
+ 
   setTimeout(function() {
-
+    latestData = request.toString();
     // send reply back to client.
     zmqResponder.send("OK");
   }, 1000);
-  */
+ 
 });
 
 zmqResponder.bind('tcp://*:5556', function(err) {
