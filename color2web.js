@@ -27,7 +27,7 @@ responder.on('message', function(request) {
   setTimeout(function() {
 
     // send reply back to client.
-    responder.send("World");
+    responder.send("OK");
   }, 1000);
 });
 
@@ -37,7 +37,7 @@ responder.bind('tcp://*:5556', function(err) {
   if (err) {
     console.log(err);
   } else {
-    console.log("Listening on 5555…");
+    console.log("Listening on 5556");
   }
 });
 
