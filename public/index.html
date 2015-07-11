@@ -4,24 +4,32 @@
  <script src="//cdn.jsdelivr.net/p5.js/0.3.8/p5.min.js"></script>
  <script type="text/javascript" src="//cdn.jsdelivr.net/p5.js/0.3.8/addons/p5.dom.js"></script>
  <script type="text/javascript">
+
 function setup() {
-  // make a new div and position it at 10, 10:
-  text = createDiv("Sensor reading:");
-  text.position(10,10);
+ text = createDiv("sns");
+ text.position(10, 110);
+
+ fill(color(20,20,20));
+ noStroke();
+ rect(10,10,100,100);
+}
+
+function mousePressed(){
   // make a HTTP call to the server for the data:
   var sensorReading = loadStrings("/data", showData);
+
 }
+
 function showData(result) {
+  text.html("input (R,G,B): " + result);
   var resultString = result[0];
   // split it:
-  var numbers = split(resultString, " ");
+  var numbers = split(resultString, ",");
   // use the numbers:
   c = color(numbers[0], numbers[1], numbers[2]);
   fill(c);
   noStroke();
   rect(10,10,100,100);
-  text.html("Sensor reading:" + resultString);
-  text.position(10, 110);
  }
  </script>
  </head>
