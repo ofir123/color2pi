@@ -1,4 +1,5 @@
 import sys
+import time
 import math
 import random
 import logbook
@@ -137,6 +138,7 @@ def setup():
 	driver.get('http://sta.sh/muro')
 	driver.maximize_window()
 	driver.find_element_by_tag_name('html').send_keys(Keys.F11)
+	time.sleep(5)
 	# Pick the right tool.
 	log.info('Picking the splatter brush...')
 	driver.find_element_by_class_name('iconSplatter').click()
