@@ -1,5 +1,8 @@
 # color2pi
-sniffing color using the pi camera, detect median color and send over serial to arduino and over zqm to a p5.js html file.
+sniffing color using the pi camera  to python  
+detect avrage color using pillow
+send over serial to arduino   
+send over zqm to a node server running a p5.js html file.
 
 ## preper pi
 1. format and extract noob-lite to SD crap, install raspebian
@@ -11,25 +14,20 @@ in raspi-config - enable camera, disable console to serial in "advanced", overcl
 
 ```sudo apt-get install python-setuptools```
 
-##install pip and pillow, 
-but still stupied jpeg decoder [doesnt load]( http://stackoverflow.com/questions/4632261/pil-jpeg-library-help)
-
+##install pip and pillow
 ```pip install Pillow```
-
 http://picamera.readthedocs.org/en/release-1.10/quickstart.html
 
-serial disbale logger, if you didnt in the raspi-conf
-http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
 
 
 ==node 
 came from [another git](https://github.com/shenkarSElab/Adafruit_TCS34725/tree/master/examples/colorview/node-serialport)
 
-zmq is explained [here](http://zguide.zeromq.org/page:all)  
+*zmq* is explained [here](http://zguide.zeromq.org/page:all)  
  The REQ-REP socket pair is in lockstep. The client issues zmq_send() and then zmq_recv(), in a loop (or once if that's all it needs). Doing any other sequence (e.g., sending two messages in a row) will result in a return code of -1 from the send or recv call. Similarly, the service issues zmq_recv() and then zmq_send() in that order, as often as it needs to.
  
- the client is color2pi.py
- the server is color2web.js / deviantArt.py
+ the client is color2pi.py  
+ the server is color2web.js / deviantArt.py  
  
 == for pi ==
 needs some trickery to get  node/zmq going on pi
@@ -38,7 +36,7 @@ needs some trickery to get  node/zmq going on pi
 via [thi guy](http://weworkweplay.com/play/raspberry-pi-nodejs/)
 
 and then the node npm package   
-```npm install zmq```
+```npm install zmq servi```
 
 == for windows (WIP)==
 
