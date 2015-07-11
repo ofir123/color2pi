@@ -1,5 +1,6 @@
 # color2pi
-sniffing color using the pi camera, detect median color and send over serial to arduino
+sniffing color using the pi camera, detect median color and send over serial to arduino and over zqm to a p5.js html file.
+
 ## preper pi
 1. format and extract noob-lite to SD crap, install raspebian
 
@@ -36,11 +37,8 @@ needs some trickery to get  node/zmq going on pi
 ```sudo dpkg -i node_latest_armhf.deb```  
 via [thi guy](http://weworkweplay.com/play/raspberry-pi-nodejs/)
 
-then manualy install zmq   
-
 and then the node npm package   
-```npm install -g zmq```
-see [here](https://github.com/JustinTulloss/zeromq.node/issues/120#issuecomment-22013177)  
+```npm install zmq```
 
 == for windows (WIP)==
 
