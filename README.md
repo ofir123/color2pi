@@ -24,7 +24,23 @@ http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
 ==node 
 came from [another git](https://github.com/shenkarSElab/Adafruit_TCS34725/tree/master/examples/colorview/node-serialport)
 
+zmq is explained [here](http://zguide.zeromq.org/page:all)  
+ The REQ-REP socket pair is in lockstep. The client issues zmq_send() and then zmq_recv(), in a loop (or once if that's all it needs). Doing any other sequence (e.g., sending two messages in a row) will result in a return code of -1 from the send or recv call. Similarly, the service issues zmq_recv() and then zmq_send() in that order, as often as it needs to.
+ 
+ the client is color2pi.py
+ the server is color2web.js / deviantArt.py
+ 
+== for pi ==
+needs some trickery to get  node/zmq going on pi
+```wget http://node-arm.herokuapp.com/node_latest_armhf.deb ```
+```sudo dpkg -i node_latest_armhf.deb```  
+via [thi guy](http://weworkweplay.com/play/raspberry-pi-nodejs/)
 
+then manualy install zmq   
+
+and then the node npm package   
+```npm install -g zmq```
+see [here](https://github.com/JustinTulloss/zeromq.node/issues/120#issuecomment-22013177)  
 
 == for windows (WIP)==
 
@@ -41,3 +57,7 @@ $ node color2web.js COM15
 3. open browser at localhost:8080
 4. refresh page to get new data
 
+
+====last res====
+https://www.npmjs.com/package/osc-min  
+https://github.com/colinbdclark/osc.js-examples/tree/master/nodejs
