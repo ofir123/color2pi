@@ -12,16 +12,13 @@ in raspi-config - enable camera, disable console to serial in "advanced", overcl
 
 ```sudo apt-get update && sudo apt-get upgrade```
 
-```sudo apt-get install python-setuptools```
+###install python,  pip and pillow
 
-##install pip and pillow
-```pip install Pillow```
-http://picamera.readthedocs.org/en/release-1.10/quickstart.html
-
+```sudo apt-get install python-setuptools && pip install Pillow```  
+[quickstart](http://picamera.readthedocs.org/en/release-1.10/quickstart.html)
 
 
-==node 
-came from [another git](https://github.com/shenkarSElab/Adafruit_TCS34725/tree/master/examples/colorview/node-serialport)
+##node 
 
 *zmq* is explained [here](http://zguide.zeromq.org/page:all)  
  The REQ-REP socket pair is in lockstep. The client issues zmq_send() and then zmq_recv(), in a loop (or once if that's all it needs). Doing any other sequence (e.g., sending two messages in a row) will result in a return code of -1 from the send or recv call. Similarly, the service issues zmq_recv() and then zmq_send() in that order, as often as it needs to.
