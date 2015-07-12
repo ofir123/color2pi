@@ -137,7 +137,7 @@ def setup():
 	driver = webdriver.Firefox()
 	driver.get('http://sta.sh/muro')
 	driver.maximize_window()
-	#driver.find_element_by_tag_name('html').send_keys(Keys.F11)
+	driver.find_element_by_tag_name('html').send_keys(Keys.F11)
 	time.sleep(5)
 	# Pick the right tool.
 	log.info('Picking the splatter brush...')
