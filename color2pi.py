@@ -56,6 +56,7 @@ def main():
 			avg = ImageStat.Stat(im2).median
 			r, g, b, s = avg
 			message = '{0}{1}{2}{3}{4}'.format(r, COLORS_DELIMITER, g, COLORS_DELIMITER, b)
+			ser.write(message + '\n')
 			log.info('Colors are: {0}'.format(message))
 			# Send to server.
 			socket.send(message)
@@ -66,7 +67,6 @@ def main():
 				socket.send(STOP_MESSAGE)
 				break
 			# Send to serial.
-			ser.write(message + '\n')
 	except KeyboardInterrupt:
 		try:
 			# Tell the server to stop as well.
