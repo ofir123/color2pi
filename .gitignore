@@ -58,3 +58,5 @@ target/
 
 *.jpg
 *.png
+ 
+node_modules

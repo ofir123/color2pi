@@ -1,5 +1,9 @@
 # color2pi
-sniffing color using the pi camera, detect median color and send over serial to arduino
+sniffing color using the pi camera  to python  
+detect avrage color using pillow
+send over serial to arduino   
+send over zqm to a node server running a p5.js html file.
+
 ## preper pi
 1. format and extract noob-lite to SD crap, install raspebian
 
@@ -8,26 +12,45 @@ in raspi-config - enable camera, disable console to serial in "advanced", overcl
 
 ```sudo apt-get update && sudo apt-get upgrade```
 
-```sudo apt-get install python-setuptools```
+###install python,  pip and pillow
 
-##install pip and pillow, 
-but still stupied jpeg decoder [doesnt load]( http://stackoverflow.com/questions/4632261/pil-jpeg-library-help)
+```sudo apt-get install python-setuptools && pip install Pillow```  
+[quickstart](http://picamera.readthedocs.org/en/release-1.10/quickstart.html)
 
-```pip install Pillow```
 
-http://picamera.readthedocs.org/en/release-1.10/quickstart.html
+##node 
 
-serial disbale logger, if you didnt in the raspi-conf
-http://www.irrational.net/2012/04/19/using-the-raspberry-pis-serial-port/
+*zmq* is explained [here](http://zguide.zeromq.org/page:all)  
+ The REQ-REP socket pair is in lockstep. The client issues zmq_send() and then zmq_recv(), in a loop (or once if that's all it needs). Doing any other sequence (e.g., sending two messages in a row) will result in a return code of -1 from the send or recv call. Similarly, the service issues zmq_recv() and then zmq_send() in that order, as often as it needs to.
+ 
+ the client is color2pi.py  
+ the server is color2web.js / deviantArt.py  
+ 
+== for pi ==
+needs some trickery to get  node/zmq going on pi
+```wget http://node-arm.herokuapp.com/node_latest_armhf.deb ```
+```sudo dpkg -i node_latest_armhf.deb```  
+via [thi guy](http://weworkweplay.com/play/raspberry-pi-nodejs/)
 
-==wish
+and then the node npm package   
+```npm install zmq servi```
 
-we will do this all in nodejs, but its too slow and the pi camera seems not to be as well supported
+== for windows (WIP)==
 
-see efort [here](https://github.com/shenkarSElab/Adafruit_TCS34725/tree/master/examples/colorview/node-serialport)
+===download===
+get git for windows (comes with msys), this will be your command line.
+get [nodejs for windows](http://blog.teamtreehouse.com/install-node-js-npm-windows)
+go to command line at Adafruit_TCS34725\examples\colorview\node-serialport\color2web
 
-image processing - https://github.com/EyalAr/lwip
+0. run this line to get all the needed packages for node to run this thing
+$ npm install zmq servi
+1. upload color2pi.ino to arduino
+2. run with the node command 
+$ node color2web.js COM15
+3. open browser at localhost:8080
+4. refresh page to get new data
 
-camera access - https://github.com/troyth/node-raspicam/
 
-and the p5.js for the visuals
+====last res====
+https://www.npmjs.com/package/osc-min  
+https://github.com/colinbdclark/osc.js-examples/tree/master/nodejs
