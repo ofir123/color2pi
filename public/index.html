@@ -17,6 +17,8 @@ var current;
 var previous;
 
 var numbers = [0,0,0];
+var prevMillis;
+var interval = 1000;
 
 function setup() {
   createCanvas(720, 400);
@@ -24,11 +26,17 @@ function setup() {
   previous = createVector(0,0);
   text = createDiv("");
   text.position(10,700);
+  prevMillis = millis();
 };
 
 function draw() {
   background(200);
-  
+
+  if(millis() - prevMillis > interval){
+    prevMillis = millis();
+    askForData();
+  }
+
   // If it's time for a new point
   if (millis() > next && painting) {
 
@@ -68,12 +76,12 @@ function showData(result) {
   text.html("input (R,G,B): " + result);
   var resultString = result[0];
   numbers = split(resultString, ",");
+  print(numbers);
  }
  
  
 // Start drawing on mouse
 function mousePressed() {
-  askForData();
   next = 0;
   painting = true;
   previous.x = mouseX;
