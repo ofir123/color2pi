@@ -30,26 +30,27 @@ COLOR_SQUARE_SIZE = 68
 # Sliders settings.
 MIN_OPACITY = 30
 MAX_OPACITY = 118
-MIN_SIZE = 5
-MAX_SIZE = 22
-    
+MIN_SIZE = 30
+MAX_SIZE = 60
+COLORS_LIMIT = 120
+
 log = logbook.Logger('DeviantArt')
 
-	
+
 def remove_class(driver, class_name):
     """
     Removes the element with the given class.
     """
     driver.execute_script(REMOVE_SCRIPT.format('.' + class_name))
 
-	
+
 def remove_id(driver, id_name):
     """
     Removes the element with the given ID.
     """
     driver.execute_script(REMOVE_SCRIPT.format('#' + id_name))
 
-	
+
 def change_canvas_size(driver, class_name, width, height, only_style=False):
     """
     Changes the size of a canvas, to the desired width and height.
@@ -65,7 +66,7 @@ def change_canvas_size(driver, class_name, width, height, only_style=False):
         driver.execute_script(MODIFY_SCRIPT.format(class_name, 'width', str(width)))
         driver.execute_script(MODIFY_SCRIPT.format(class_name, 'height', str(height)))
 
-		
+
 def change_slider(driver, slider_element, value):
     """
     Changes one of the 3 option sliders.
@@ -104,7 +105,7 @@ def change_color(driver, r, g, b):
     action.move_to_element_with_offset(saturation_element, x, y)
     action.click()
     action.perform()
-	
+
 
 def paint(driver, canvas_element, x, y):
     """
@@ -119,114 +120,136 @@ def paint(driver, canvas_element, x, y):
         action.release()
         action.perform()
     except MoveTargetOutOfBoundsException:
-        # If we accidentaly stepped out of bounds, 
+        # If we accidentally stepped out of bounds,
         # stop the current paint action and release the mouse button.
-        action = webdriver.common.action_chains.ActionChains(driver)
-        action.release()
-        action.perform()
-		
+        try:
+            action = webdriver.common.action_chains.ActionChains(driver)
+            action.release()
+            action.perform()
+        except Exception:
+            pass
+
 
 def setup():
-	"""
-	Setup the browser window and painting canvas.
-	
-	:return: The newly created web driver.
-	"""		
-	# Set up the window.
-	log.info('Loading the original website...')
-	driver = webdriver.Firefox()
-	driver.get('http://sta.sh/muro')
-	driver.maximize_window()
-	driver.find_element_by_tag_name('html').send_keys(Keys.F11)
-	time.sleep(5)
-	# Pick the right tool.
-	log.info('Picking the splatter brush...')
-	driver.find_element_by_class_name('iconSplatter').click()
-	# Remove all unwanted side bars.
-	log.info('Removing side bars...')
-	remove_class(driver, 'sideBar')
-	remove_class(driver, 'topArea')
-	remove_id(driver, 'overhead-collect')
-	# Set the density slider.
-	log.info('Setting density value to 100%')
-	sliders = driver.find_elements_by_class_name('sliderProgress')
-	# Density.
-	change_slider(driver, sliders[2], 120)
-	# Maximize the canvas.
-	log.info('Maximizing canvas size...')
-	window_size = driver.get_window_size()
-	canvas_width = window_size['width']
-	canvas_height = window_size['height']
-	change_canvas_size(driver, 'selectionCanvas', canvas_width, canvas_height)
-	change_canvas_size(driver, 'drawPlzCanvas', canvas_width, canvas_height)
-	change_canvas_size(driver, 'canvasBuffer', canvas_width, canvas_height)
-	change_canvas_size(driver, 'stagingBuffer', canvas_width, canvas_height)
-	change_canvas_size(driver, 'marchingAnts', canvas_width, canvas_height)
-	change_canvas_size(driver, 'canvasPaint', canvas_width, canvas_height, only_style=True)
-	# Modify specific styles and positions.
-	driver.execute_script(MODIFY_SCRIPT.format('middleArea', 'style.paddingRight', '0px'))
-	driver.execute_script(MODIFY_SCRIPT.format('middleArea', 'style.height', '100%'))
-	driver.execute_script(MODIFY_SCRIPT.format('drawPlzCanvas', 'style.left', '0px'))
-	driver.execute_script(MODIFY_SCRIPT.format('drawPlzCanvas', 'style.top', '0px'))
-	driver.execute_script(MODIFY_SCRIPT.format('drawPlzCanvas', 'width', canvas_width))
-	driver.execute_script('document.getElementsByClassName("canvasPaint")[1].width = %d;' % canvas_width)
-	driver.execute_script('document.getElementsByClassName("canvasPaint")[1].height = %d;' % canvas_height)
-	# Hide the mouse cursor.
-	log.info('Hiding mouse reticule...')
-	driver.execute_script(MODIFY_SCRIPT.format('cursorPreview', 'style.visibility', 'hidden'))
-	return driver
+    """
+    Setup the browser window and painting canvas.
+
+    :return: The newly created web driver.
+    """
+    # Set up the window.
+    log.info('Loading the original website...')
+    driver = webdriver.Firefox()
+    driver.get('http://sta.sh/muro')
+    driver.maximize_window()
+    driver.find_element_by_tag_name('html').send_keys(Keys.F11)
+    time.sleep(5)
+    # Pick the right tool.
+    log.info('Picking the splatter brush...')
+    driver.find_element_by_class_name('iconSplatter').click()
+    # Remove all unwanted side bars.
+    log.info('Removing side bars...')
+    remove_class(driver, 'sideBar')
+    remove_class(driver, 'topArea')
+    remove_id(driver, 'overhead-collect')
+    # Set the density slider.
+    log.info('Setting density value to 100%')
+    sliders = driver.find_elements_by_class_name('sliderProgress')
+    # Density.
+    change_slider(driver, sliders[2], 120)
+    # Maximize the canvas.
+    log.info('Maximizing canvas size...')
+    window_size = driver.get_window_size()
+    canvas_width = window_size['width']
+    canvas_height = window_size['height']
+    change_canvas_size(driver, 'selectionCanvas', canvas_width, canvas_height)
+    change_canvas_size(driver, 'drawPlzCanvas', canvas_width, canvas_height)
+    change_canvas_size(driver, 'canvasBuffer', canvas_width, canvas_height)
+    change_canvas_size(driver, 'stagingBuffer', canvas_width, canvas_height)
+    change_canvas_size(driver, 'marchingAnts', canvas_width, canvas_height)
+    change_canvas_size(driver, 'canvasPaint', canvas_width, canvas_height, only_style=True)
+    # Modify specific styles and positions.
+    driver.execute_script(MODIFY_SCRIPT.format('middleArea', 'style.paddingRight', '0px'))
+    driver.execute_script(MODIFY_SCRIPT.format('middleArea', 'style.height', '100%'))
+    driver.execute_script(MODIFY_SCRIPT.format('drawPlzCanvas', 'style.left', '0px'))
+    driver.execute_script(MODIFY_SCRIPT.format('drawPlzCanvas', 'style.top', '0px'))
+    driver.execute_script(MODIFY_SCRIPT.format('drawPlzCanvas', 'width', canvas_width))
+    driver.execute_script('document.getElementsByClassName("canvasPaint")[1].width = %d;' % canvas_width)
+    driver.execute_script('document.getElementsByClassName("canvasPaint")[1].height = %d;' % canvas_height)
+    # Hide the mouse cursor.
+    log.info('Hiding mouse reticule...')
+    driver.execute_script(MODIFY_SCRIPT.format('cursorPreview', 'style.visibility', 'hidden'))
+    return driver
 
 
-def main():	
-	"""
-	Paints based on colors received from the server.
-	Usage: deviantArt.py [PORT]
-	"""
-	# Validate input parameters.
-	port = DEFAULT_LISTENING_PORT if len(sys.argv) == 1 else sys.argv[1]
-	# Connect to the server.
-	context = zmq.Context()
-	log.info('Waiting for painting requests (port: {0})...'.format(port))
-	socket = context.socket(zmq.REP)
-	socket.bind ('tcp://*:{0}'.format(port))
-	# Initialize the website.
-	driver = setup()
-	# Find the canvas width and height.
-	window_size = driver.get_window_size()
-	canvas_width = window_size['width']
-	canvas_height = window_size['height']
-	# Find the main canvas element.
-	canvas_element = driver.find_element_by_class_name('drawPlzCanvas')
-	# Start painting!
-	log.info('Let\'s paint!')
-	while True:
-		message = socket.recv()
-		log.info('Received request: {0}'.format(message))
-		socket.send(OK_REPLY)
-		log.info('Sent {0} back'.format(OK_REPLY))
-		if message == STOP_MESSAGE:
-			log.info('Stopping!')
-			break
-		# Pick the requested color.
-		r, g, b = message.split(COLORS_DELIMITER)
-		# Don't get to close to the borders.
-		x = random.randint(0, canvas_width - 50)
-		y = random.randint(0, canvas_height - 50)
-		log.info('Current RGB color - ({0}, {1}, {2})'.format(r, g, b))
-		log.info('Current coordinates - ({0}, {1})'.format(x, y))
-		change_color(driver, r, g, b)
-		# Change opacity and size randomly.
-		sliders = driver.find_elements_by_class_name('sliderProgress')
-		# Opacity.
-		opacity = random.randint(MIN_OPACITY, MAX_OPACITY)
-		change_slider(driver, sliders[0], opacity)
-		# Size.
-		size = random.randint(MIN_SIZE, MAX_SIZE)
-		change_slider(driver, sliders[1], size)
-		log.info('Opacity: {0}, Size: {1}'.format(opacity, size))
-		# Paint!
-		paint(driver, canvas_element, x, y)
-		
+def main():
+    """
+    Paints based on colors received from the server.
+    Usage: deviantArt.py [PORT]
+    """
+    with logbook.StreamHandler(sys.stdout):
+        # Validate input parameters.
+        port = DEFAULT_LISTENING_PORT if len(sys.argv) == 1 else sys.argv[1]
+        # Connect to the server.
+        context = zmq.Context()
+        log.info('Waiting for painting requests (port: {0})...'.format(port))
+        socket = context.socket(zmq.REP)
+        socket.bind('tcp://*:{0}'.format(port))
+        # Initialize the website.
+        driver = setup()
+        # Find the canvas width and height.
+        window_size = driver.get_window_size()
+        canvas_width = window_size['width']
+        canvas_height = window_size['height']
+        # Find the main canvas element.
+        canvas_element = driver.find_element_by_class_name('drawPlzCanvas')
+        # Start painting!
+        log.info('Let\'s paint!')
+        colors_counter = 0
+        while True:
+            message = socket.recv()
+            log.info('Received request: {0}'.format(message))
+            socket.send(OK_REPLY)
+            log.info('Sent {0} back'.format(OK_REPLY))
+            if message == STOP_MESSAGE:
+                log.info('Stopping!')
+                break
+            # Pick the requested color.
+            r, g, b = message.split(COLORS_DELIMITER)
+            # Don't get to close to the borders.
+            x = random.randint(0, canvas_width - 90)
+            y = random.randint(0, canvas_height - 90)
+            log.info('Current RGB color - ({0}, {1}, {2})'.format(r, g, b))
+            log.info('Current coordinates - ({0}, {1})'.format(x, y))
+            change_color(driver, r, g, b)
+            # Change opacity and size randomly.
+            sliders = driver.find_elements_by_class_name('sliderProgress')
+            # Opacity.
+            opacity = random.randint(MIN_OPACITY, MAX_OPACITY)
+            change_slider(driver, sliders[0], opacity)
+            # Size.
+            size = random.randint(MIN_SIZE, MAX_SIZE)
+            change_slider(driver, sliders[1], size)
+            log.info('Opacity: {0}, Size: {1}'.format(opacity, size))
+            # Paint!
+            paint(driver, canvas_element, x, y)
+            x_button = driver.find_elements_by_class_name('x')
+            if len(x_button) > 0:
+                x_button[0].click()
+                driver.execute_script('window.onbeforeunload = function(e){};')
+            colors_counter += 1
+            if colors_counter >= COLORS_LIMIT:
+                colors_counter = 0
+                driver.close()
+                driver.execute_script('window.onbeforeunload = function(e){};')
+                # Initialize the website.
+                driver = setup()
+                # Find the canvas width and height.
+                window_size = driver.get_window_size()
+                canvas_width = window_size['width']
+                canvas_height = window_size['height']
+                # Find the main canvas element.
+                canvas_element = driver.find_element_by_class_name('drawPlzCanvas')
+
 
 if __name__ == '__main__':
-	main()
+    main()
