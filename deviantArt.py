@@ -10,6 +10,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import MoveTargetOutOfBoundsException
 
+# USE WITH FIREFOX & SELENIUM-0.46.0 ONLY!!!!!
+
 # Server related constants.
 DEFAULT_LISTENING_PORT = '5556'
 STOP_MESSAGE = 'STOP'
